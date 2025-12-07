@@ -4,6 +4,7 @@ if(isset($_POST['message'])) {
     $message = $_POST['message'];
     $date = date('Y-m-d H:i:s');
     
+    
     // Filter out messages we don't want to show in the console
     $filtered_messages = [
         "Location data sent",
