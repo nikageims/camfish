@@ -4,6 +4,7 @@
 
 echo "Starting cleanup of unnecessary files and logs..."
 
+
 # Remove log files
 echo "Removing log files..."
 rm -f *.log
